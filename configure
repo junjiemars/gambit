@@ -9352,12 +9352,16 @@ fi
 
 fi
 
-if test "$C_COMP_LLVM" = yes -a "$C_COMP_CLANG" != yes -a "$C_COMP_GNUC_VERSION" -lt 405000; then
-  LLVM_GCC_LABEL_VALUES_POSSIBLE_BUG=yes
+if test "$C_COMP_LLVM" = yes -a "$C_COMP_CLANG" != yes -a -n "$C_COMP_GNUC_VERSION"; then
+	if test "$C_COMP_GNUC_VERSION" -lt 405000; then
+		LLVM_GCC_LABEL_VALUES_POSSIBLE_BUG=yes
+	fi
 fi
 
-if test "$C_COMP_CLANG" != yes -a "$C_COMP_GNUC_VERSION" -ge 402000 -a "$C_COMP_GNUC_VERSION" -lt 404000 -a "$ENABLE_SINGLE_HOST" = yes; then
-  GNU_GCC_MOVE_LOOP_INVARIANTS_POSSIBLE_BUG=yes
+if test "$C_COMP_CLANG" != yes -a -n "$C_COMP_GNUC_VERSION"; then
+	if test "$C_COMP_GNUC_VERSION" -ge 402000 -a "$C_COMP_GNUC_VERSION" -lt 404000 -a "$ENABLE_SINGLE_HOST" = yes; then
+		GNU_GCC_MOVE_LOOP_INVARIANTS_POSSIBLE_BUG=yes
+	fi
 fi
 
 case "$target_os" in
